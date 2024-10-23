@@ -1,7 +1,8 @@
 import { FontSizeOutlined } from '@ant-design/icons';
-import type { ProFormInstance } from '@ant-design/pro-form';
-import ProForm, {
+import type { ProFormInstance } from '@ant-design/pro-components';
+import {
   LightFilter,
+  ProForm,
   ProFormCaptcha,
   ProFormCheckbox,
   ProFormColorPicker,
@@ -15,7 +16,7 @@ import ProForm, {
   ProFormText,
   ProFormTimePicker,
   ProFormTreeSelect,
-} from '@ant-design/pro-form';
+} from '@ant-design/pro-components';
 import {
   act,
   cleanup,
@@ -255,7 +256,7 @@ describe('ProForm', () => {
     });
     const dom = await (await wrapper.findByText('提 交')).parentElement;
     expect(dom?.className.includes('ant-btn-loading')).toBe(true);
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     wrapper.unmount();
     vi.useRealTimers();
   });
@@ -285,7 +286,7 @@ describe('ProForm', () => {
       dom = await (await wrapper.findByText('提 交')).parentElement;
     });
     expect(dom?.className.includes('ant-btn-loading')).toBe(true);
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
 
     act(() => {
       vi.runOnlyPendingTimers();
@@ -494,7 +495,7 @@ describe('ProForm', () => {
       await (await wrapper.findByText('提 交')).click();
     });
 
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     wrapper.unmount();
   });
 
@@ -566,7 +567,7 @@ describe('ProForm', () => {
         .click();
     });
 
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     wrapper.unmount();
   });
 
@@ -595,7 +596,7 @@ describe('ProForm', () => {
         .querySelectorAll<HTMLElement>('button.test_button')[0]
         .click();
     });
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     wrapper.unmount();
   });
 
@@ -627,7 +628,10 @@ describe('ProForm', () => {
       (await wrapper.findByText('提交并发布')).click();
     });
 
-    expect(onFinish).toBeCalled();
+    await waitFor(() => {
+      expect(onFinish).toHaveBeenCalled();
+    });
+
     wrapper.unmount();
   });
 
@@ -829,7 +833,7 @@ describe('ProForm', () => {
       (await wrapper.findByText('获取验证码'))?.click();
     });
 
-    expect(fn).not.toBeCalled();
+    expect(fn).not.toHaveBeenCalled();
 
     act(() => {
       fireEvent.change(
@@ -846,7 +850,7 @@ describe('ProForm', () => {
       captcha.click();
     });
 
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     wrapper.unmount();
   });
 
@@ -1015,7 +1019,7 @@ describe('ProForm', () => {
       wrapper.baseElement.querySelectorAll<HTMLElement>('#click')[0].click();
     });
 
-    expect(fn).not.toBeCalled();
+    expect(fn).not.toHaveBeenCalled();
     wrapper.unmount();
   });
 
@@ -1053,6 +1057,7 @@ describe('ProForm', () => {
       </ProForm>,
     );
     await wrapper.findByText('提 交');
+
     act(() => {
       fireEvent.change(
         wrapper.baseElement.querySelectorAll<HTMLElement>('input#testInput')[0],
@@ -1063,7 +1068,7 @@ describe('ProForm', () => {
         },
       );
     });
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     wrapper.unmount();
   });
 
@@ -1095,7 +1100,7 @@ describe('ProForm', () => {
         },
       );
     });
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     wrapper.unmount();
   });
 
@@ -3096,49 +3101,7 @@ describe('ProForm', () => {
     });
     expect(onFinish).toHaveBeenCalledWith('#f5222d');
   });
-  it('📦 ColorPicker support rgba old', async () => {
-    const onFinish = vi.fn();
-    const wrapper = render(
-      <ProForm
-        onValuesChange={async (values) => {
-          onFinish(values?.color);
-        }}
-      >
-        <ProFormColorPicker name="color" old label="颜色选择" />
-      </ProForm>,
-    );
 
-    act(() => {
-      wrapper.baseElement
-        .querySelectorAll<HTMLElement>('.ant-pro-field-color-picker')[0]
-        .click();
-    });
-
-    // 选中第一个
-    act(() => {
-      wrapper.baseElement
-        .querySelectorAll<HTMLElement>('.flexbox-fix')[2]
-        .querySelectorAll<HTMLDivElement>('div span div')[2]
-        .click();
-    });
-
-    expect(onFinish).toHaveBeenCalledWith('#5b8ff9');
-
-    act(() => {
-      fireEvent.change(
-        wrapper.baseElement.querySelectorAll<HTMLElement>(
-          '#rc-editable-input-5',
-        )[0],
-        {
-          target: {
-            value: 2,
-          },
-        },
-      );
-    });
-
-    expect(onFinish).toHaveBeenCalledWith('rgba(91, 143, 249, 0.02)');
-  });
   it('📦 validateFieldsReturnFormatValue', async () => {
     const fn1 = vi.fn();
     const fn2 = vi.fn();

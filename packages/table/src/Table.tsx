@@ -1,8 +1,3 @@
-// 兼容代码-----------
-import 'antd/lib/table/style';
-import 'antd/lib/typography/style';
-//----------------------
-
 import ProCard from '@ant-design/pro-card';
 import ProForm, { GridContext } from '@ant-design/pro-form';
 import type { ParamsType } from '@ant-design/pro-provider';
@@ -24,7 +19,7 @@ import type {
   GetRowKey,
   SortOrder,
   TableCurrentDataSource,
-} from 'antd/lib/table/interface';
+} from 'antd/es/table/interface';
 import classNames from 'classnames';
 import isEmpty from 'lodash-es/isEmpty';
 import isEqual from 'lodash-es/isEqual';
@@ -804,7 +799,7 @@ const ProTable = <
       }
     },
     [tableColumn],
-    ['render', 'renderFormItem'],
+    ['render', 'formItemRender'],
     100,
   );
 

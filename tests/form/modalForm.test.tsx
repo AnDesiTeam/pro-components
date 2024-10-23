@@ -1,4 +1,4 @@
-﻿import { ModalForm, ProFormText } from '@ant-design/pro-form';
+﻿import { ModalForm, ProFormText } from '@ant-design/pro-components';
 import {
   act,
   cleanup,
@@ -570,7 +570,7 @@ describe('ModalForm', () => {
       (await html.queryByText('取 消'))?.click();
     });
 
-    expect(fn).not.toBeCalled();
+    expect(fn).not.toHaveBeenCalled();
 
     act(() => {
       vi.runOnlyPendingTimers();
@@ -588,7 +588,7 @@ describe('ModalForm', () => {
     act(() => {
       vi.runOnlyPendingTimers();
     });
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     vi.useRealTimers();
   });
 
@@ -634,7 +634,7 @@ describe('ModalForm', () => {
       await waitForWaitTime(500);
     });
 
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
 
     act(() => {
       wrapper.unmount();

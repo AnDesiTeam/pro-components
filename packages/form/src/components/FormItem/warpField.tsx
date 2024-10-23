@@ -8,16 +8,16 @@
 import type { FormItemProps } from 'antd';
 import classnames from 'classnames';
 import { FieldContext as RcFieldContext } from 'rc-field-form';
-import { noteOnce } from 'rc-util/lib/warning';
 import React, { useContext, useMemo, useState } from 'react';
-import FieldContext from '../FieldContext';
-import { ProFormDependency, ProFormItem } from '../components';
-import { useGridHelpers } from '../helpers';
+import FieldContext from '../../FieldContext';
+import { useGridHelpers } from '../../helpers';
 import type {
   ExtendsProps,
   ProFormFieldItemProps,
   ProFormItemCreateConfig,
-} from '../typing';
+} from '../../typing';
+import ProFormDependency from '../Dependency';
+import ProFormItem from './index';
 
 export const TYPE = Symbol('ProFormComponent');
 
@@ -56,7 +56,7 @@ type FunctionFieldProps = {
  * @param Field
  * @param config
  */
-function createField<P extends ProFormFieldItemProps = any>(
+export function warpField<P extends ProFormFieldItemProps = any>(
   Field: React.ComponentType<P> | React.ForwardRefExoticComponent<P>,
   config?: ProFormItemCreateConfig,
 ): ProFormComponent<P, ExtendsProps & FunctionFieldProps> {
@@ -183,12 +183,6 @@ function createField<P extends ProFormFieldItemProps = any>(
       [defaultFormItemProps, formItemProps, messageVariables],
     );
 
-    noteOnce(
-      // eslint-disable-next-line @typescript-eslint/dot-notation
-      !rest['defaultValue'],
-      '请不要在 Form 中使用 defaultXXX。如果需要默认值请使用 initialValues 和 initialValue。',
-    );
-
     const { prefixName } = useContext(RcFieldContext);
 
     const proFieldKey = useDeepCompareMemo(() => {
@@ -205,7 +199,7 @@ function createField<P extends ProFormFieldItemProps = any>(
     const onChange = useRefFunction((...restParams: any[]) => {
       if (getFormItemProps || getFieldProps) {
         forceUpdateByOnChange([]);
-      } else if (rest.renderFormItem) {
+      } else if (rest.formItemRender) {
         forceUpdate([]);
       }
       fieldProps?.onChange?.(...restParams);
@@ -381,4 +375,4 @@ function createField<P extends ProFormFieldItemProps = any>(
   return DependencyWrapper;
 }
 
-export { createField };
+export default warpField;

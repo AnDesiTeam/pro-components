@@ -161,7 +161,7 @@ describe('settingDrawer.test', () => {
     fireEvent.click(container.querySelector('.ant-btn.ant-btn-block')!);
     fireEvent.click(container.querySelector('div.ant-drawer-mask')!);
 
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     expect(fn).toHaveBeenCalledWith({
       navTheme: 'realDark',
       layout: 'mix',
@@ -212,7 +212,7 @@ describe('settingDrawer.test', () => {
     );
 
     fireEvent.click(container.querySelector('.ant-btn.ant-btn-block')!);
-    expect(fn).toBeCalled();
+    expect(fn).toHaveBeenCalled();
     unmount();
   });
 

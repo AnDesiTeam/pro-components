@@ -1,4 +1,4 @@
-﻿import { DrawerForm, ModalForm, ProFormText } from '@ant-design/pro-form';
+﻿import { DrawerForm, ModalForm, ProFormText } from '@ant-design/pro-components';
 import {
   act,
   cleanup,
@@ -302,11 +302,11 @@ describe('DrawerForm', () => {
     });
     await waitForWaitTime(100);
     expect(fn).toHaveBeenCalledWith(false);
-    expect(fn).toBeCalledTimes(2);
+    expect(fn).toHaveBeenCalledTimes(2);
 
     // 点击关闭按钮的时候会手动触发一下 onClose
     expect(onCloseFn).toHaveBeenCalledWith(false);
-    expect(fn).toBeCalledTimes(2);
+    expect(fn).toHaveBeenCalledTimes(2);
   });
 
   it('📦 form onFinish return true should close drawer', async () => {
@@ -350,7 +350,7 @@ describe('DrawerForm', () => {
     });
 
     await waitForWaitTime(100);
-    expect(fn).toBeCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
   });
 
   it('📦 submitter config no reset default config', async () => {
@@ -817,7 +817,7 @@ describe('DrawerForm', () => {
       ).toBeFalsy();
 
       // 通过检查fn被调用的次数确定在 onOpenChange 时表单是否已被重置
-      expect(fn).toBeCalledTimes(3);
+      expect(fn).toHaveBeenCalledTimes(3);
 
       html.unmount();
     });
