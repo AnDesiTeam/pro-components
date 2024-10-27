@@ -135,6 +135,10 @@ recordCreatorProps = {
   newRecordType: 'dataSource',
   // If not specified, it will use the index as the row ID
   record: {},
+  // Set button text
+  creatorButtonText: 'New line ',
+  // Custom render
+  render: (originNode) => originNode,
   // Button style settings, you can control whether the button is displayed
   // This can be used to implement features like maximum and minimum row limits
   style: {
@@ -142,25 +146,6 @@ recordCreatorProps = {
   },
   // Button properties, see https://ant.design/components/button/#API
   ...antButtonProps,
-};
-```
-
-```typescript
-recordCreatorProps = {
-  // Add at the top or at the end
-  position: 'bottom',
-  // the way to add a new line, default is cached, will disappear when cancelled
-  // if set to dataSource it will trigger onchange, it won't disappear if cancelled, only deleted
-  newRecordType: 'dataSource',
-  // If you don't write key, index will be used as row id
-  record: {},
-  // the style of the button, you can set whether the button is displayed or not
-  // so that you can do things like max row limit and min row limit
-  style: {
-    display: 'none',
-  },
-  // https://ant.design/components/button/#API
-  ... .antButtonProps,
 };
 ```
 
